@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<bean id="tableinfo_db_url" class="java.lang.String">
+		<constructor-arg><value><![CDATA[jdbc:mysql://localhost:3306/vdn?useUnicode=true&characterEncoding=utf-8]]></value></constructor-arg>
+	</bean>
+	<bean id="tableinfo_db_username" class="java.lang.String">
+		<constructor-arg value="vdn" />
+	</bean>
+	<bean id="tableinfo_db_password" class="java.lang.String">
+		<constructor-arg value="vdn" />
+	</bean>
+	<bean id="tableinfo_db_driver" class="java.lang.String">
+		<constructor-arg value="com.mysql.jdbc.Driver" />
+	</bean>
+
+	<bean id="dlglDao" class="com.btnguyen2k.dlgl.bo.jdbc.JdbcDlglDao"
+		scope="singleton" init-method="init" destroy-method="destroy">
+		<property name="userDao" ref="aclDao" />
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheName" value="com.btnguyen2k.dlgl.bo.jdbc.JdbcDlglDao" />
+		<property name="sqlPropsLocation"
+			value="/com/btnguyen2k/dlgl/bo/jdbc/dlgl-manager.sql.xml" />
+		<property name="dbDriver" ref="dlgl_db_driver" />
+		<property name="dbConnUrl" ref="dlgl_db_url" />
+		<property name="dbUsername" ref="dlgl_db_username" />
+		<property name="dbPassword" ref="dlgl_db_password" />
+
+		<property name="dataMappings">
+			<map>
+				<entry key="com.btnguyen2k.dlgl.bo.jdbc.JdbcBranchNormBo">
+					<map>
+						<entry key="branch_id">
+							<array>
+								<value>id</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="branch_name">
+							<array>
+								<value>name</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="norm_year">
+							<array>
+								<value>normYear</value>
+								<value type="java.lang.Class">java.lang.Integer</value>
+							</array>
+						</entry>
+						<entry key="norm_notes">
+							<array>
+								<value>normNotes</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="norm_sxkd">
+							<array>
+								<value>normSxkd</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_xdcb">
+							<array>
+								<value>normXdcb</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_scl">
+							<array>
+								<value>normScl</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_project">
+							<array>
+								<value>normProject</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+					</map>
+				</entry>
+				<entry key="com.btnguyen2k.dlgl.bo.jdbc.JdbcVehicleNormBo">
+					<map>
+						<entry key="vehicle_id">
+							<array>
+								<value>id</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="vehicle_name">
+							<array>
+								<value>name</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="reg_number">
+							<array>
+								<value>regNumber</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="branch_id">
+							<array>
+								<value>branchId</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="driver_id">
+							<array>
+								<value>driverId</value>
+								<value type="java.lang.Class">java.lang.String</value>
+							</array>
+						</entry>
+						<entry key="norm_year">
+							<array>
+								<value>normYear</value>
+								<value type="java.lang.Class">java.lang.Integer</value>
+							</array>
+						</entry>
+						<entry key="norm_km">
+							<array>
+								<value>normKm</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_cau_lt">
+							<array>
+								<value>normCauLt</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_nhot">
+							<array>
+								<value>normNhot</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+						<entry key="norm_baoduong1">
+							<array>
+								<value>normBaoDuong1</value>
+								<value type="java.lang.Class">java.math.BigDecimal</value>
+							</array>
+						</entry>
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

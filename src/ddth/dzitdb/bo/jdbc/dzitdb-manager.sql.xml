@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="_tbl.branch">{1}</entry>
+
+	<entry key="sql.createTableInfo"><![CDATA[
+        {"sql":"INSERT INTO ${_tbl.branch} (dbschema, dbtable, dbtable_info) VALUES (@{dbschema}, @{dbtable}, @{dbtable_info})"}
+    ]]></entry>
+    <entry key="sql.deleteTableInfo"><![CDATA[
+        {"sql":"DELETE FROM ${_tbl.branch} WHERE dbschema=@{dbschema} AND dbtable=@{dbtable}"}
+    ]]></entry>
+	<entry key="sql.getTableInfo"><![CDATA[
+        {"sql":"SELECT dbschema, dbtable, dbtable_info FROM ${_tbl.branch} WHERE dbschema=@{dbschema} AND dbtable=@{dbtable}"}
+    ]]></entry>
+	<entry key="sql.updateTableInfo"><![CDATA[
+        {"sql":"UPDATE ${_tbl.branch} SET dbschema=@{dbschema}, dbtable=@{dbtable}, dbtable_info=@{dbtable_info} WHERE dbschema=@{dbschema} AND dbtable=@{dbtable}"}
+    ]]></entry>
+
+	<entry key="sql.createTable"><![CDATA[
+        {"sql":"{CALL dzitdb_create_table(@{tableName})}"}
+    ]]></entry>
+    <entry key="sql.dropTable"><![CDATA[
+        {"sql":"{CALL dzitdb_drop_table(@{tableName})}"}
+    ]]></entry>
+	<entry key="sql.addField"><![CDATA[
+        {"sql":"{CALL dzitdb_add_field(@{tableName}, @{columnType}, @{hasIndex})}"}
+    ]]></entry>
+	<entry key="sql.removeField"><![CDATA[
+        {"sql":"{CALL dzitdb_remove_field(@{tableName}, @{columnType})}"}
+    ]]></entry>
+</properties>

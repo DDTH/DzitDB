@@ -1,117 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Ant build file for BAF project -->
-<project name="BAF" default="build-development">
-	<!--
-	<property name="dir.bundle_session" value="bundle_session" />
-	<property name="dir.bundle_session.build" value="${dir.bundle_session}/build" />
-	-->
-	<property name="dir.bundle_profile" value="bundle_profile" />
-	<property name="dir.bundle_profile.build" value="${dir.bundle_profile}/build" />
-	<property name="dir.bundle_acl" value="bundle_acl" />
-	<property name="dir.bundle_acl.build" value="${dir.bundle_acl}/build" />
-	<property name="dir.bundle_base" value="bundle_base" />
-	<property name="dir.bundle_base.build" value="${dir.bundle_base}/build" />
+<project name="DASP - DzitDB" basedir="." default="build-development">
+	<property name="dir.src" value="src" />
 	<property name="dir.build" value="build" />
+	<property name="dir.classes" value="classes" />
+	<property name="dir.lib" value="lib" />
+	<property name="dir.META-INF" value="META-INF" />
+	<property name="dir.resources" value="resources" />
+	<tstamp>
+		<format property="MICROSTAMP" pattern="yyMMddHHmm" />
+	</tstamp>
+	<property name="product.name" value="ddth.dasp.dzitdb" />
+	<property name="product.version" value="0.1.0" />
+	<property name="product.version.micro" value="${product.version}.${MICROSTAMP}" />
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="${dir.resources}/lib/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<path id="path.lib">
+		<fileset dir="${dir.lib}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${dir.resources}/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${dir.resources}/lib/04.springdm">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${dir.resources}/lib/dasp-interim">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 
 	<target name="clean">
-		<!--
-		<echo>
-		</echo>
-		<echo>CLEANING SUB-PROJECT [bundle-session]...</echo>
-		<ant dir="${dir.bundle_session}" target="clean" />
-		-->
-
-		<echo>
-		</echo>
-		<echo>CLEANING SUB-PROJECT [bundle-profile]...</echo>
-		<ant dir="${dir.bundle_profile}" target="clean" />
-
-		<echo>
-		</echo>
-		<echo>CLEANING SUB-PROJECT [bundle-acl]...</echo>
-		<ant dir="${dir.bundle_acl}" target="clean" />
-
-		<echo>
-		</echo>
-		<echo>CLEANING SUB-PROJECT [bundle-base]...</echo>
-		<ant dir="${dir.bundle_base}" target="clean" />
-
+		<delete dir="${dir.classes}" includeemptydirs="true" quiet="true">
+		</delete>
 		<delete includeemptydirs="true" quiet="true">
 			<fileset dir="${dir.build}">
 				<include name="**/*" />
 			</fileset>
 		</delete>
+	</target>
+
+	<!-- make temporary and distribution directories -->
+	<target name="prepare">
+		<mkdir dir="${dir.build}" />
+		<mkdir dir="${dir.META-INF}" />
+		<mkdir dir="${dir.classes}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac includeantruntime="false" srcdir="${dir.src}" destdir="${dir.classes}" encoding="utf-8" optimize="on" debug="on" fork="true" compiler="modern" source="1.6" target="1.6">
+			<classpath>
+				<path refid="path.lib" />
+			</classpath>
+		</javac>
+		<copy todir="${dir.classes}">
+			<fileset dir="${dir.src}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="build-development">
-		<!--
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-session]...</echo>
-		<ant dir="${dir.bundle_session}" target="build-development" />
-		-->
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-profile]...</echo>
-		<ant dir="${dir.bundle_profile}" target="build-development" />
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-acl]...</echo>
-		<ant dir="${dir.bundle_acl}" target="build-development" />
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-base]...</echo>
-		<ant dir="${dir.bundle_base}" target="build-development" />
-
-		<antcall target="post-build" />
+		<antcall target="jar" inheritall="false" />
 	</target>
 
-	<target name="build-production" depends="clean">
-		<!--
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-session]...</echo>
-		<ant dir="${dir.bundle_session}" target="build-production" />
-		-->
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-profile]...</echo>
-		<ant dir="${dir.bundle_profile}" target="build-production" />
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-acl]...</echo>
-		<ant dir="${dir.bundle_acl}" target="build-production" />
-
-		<echo>
-		</echo>
-		<echo>BUILDING SUB-PROJECT [bundle-base]...</echo>
-		<ant dir="${dir.bundle_base}" target="build-production" />
-
-		<antcall target="post-build" />
+	<target name="build-production">
+		<antcall target="jar" inheritall="false" />
 	</target>
 
-	<target name="post-build">
-		<delete includeemptydirs="true" quiet="true">
+	<target name="jar" depends="compile">
+		<delete>
 			<fileset dir="${dir.build}">
-				<include name="**/*" />
+				<include name="**/*.*" />
 			</fileset>
 		</delete>
-
-		<copy todir="${dir.build}">
-			<fileset dir="${dir.bundle_base.build}">
-				<include name="**/*.jar" />
-			</fileset>
-			<fileset dir="${dir.bundle_profile.build}">
-				<include name="**/*.jar" />
-			</fileset>
-			<fileset dir="${dir.bundle_acl.build}">
-				<include name="**/*.jar" />
+		<copy todir="${dir.classes}" overwrite="true">
+			<fileset dir="${dir.lib}">
 			</fileset>
 		</copy>
+		<copy tofile="${dir.META-INF}/MANIFEST.MF" file="MANIFEST.MF" overwrite="true" />
+		<replaceregexp file="${dir.META-INF}/MANIFEST.MF" match="Bundle-Version(.*)" replace="Bundle-Version: ${product.version.micro}" byline="true" />
+		<jar jarfile="${dir.build}/${product.name}-${product.version}.jar" basedir="${dir.classes}" duplicate="add" manifest="${dir.META-INF}/MANIFEST.MF">
+			<metainf dir="${dir.META-INF}">
+			</metainf>
+		</jar>
 	</target>
 </project>
