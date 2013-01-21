@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="bundle_isslucene/classes" path="bundle_isslucene/src"/>
+	<classpathentry kind="src" output="classes" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="resources/lib/dasp-interim/DASP-0.1.0.jar"/>
 	<classpathentry kind="lib" path="resources/lib/dasp-interim/ddth.dasp.framework-0.1.0.jar" sourcepath="/DASP"/>
-	<classpathentry kind="lib" path="resources/lib/dasp-interim/ddth.dasp.handlersocket-0.1.0.jar"/>
-	<classpathentry kind="lib" path="resources/lib/dasp-interim/ddth.dasp.osgi.springaop-0.1.0.jar"/>
+	<classpathentry kind="lib" path="resources/lib/04.springdm/spring-osgi-core-2.0.0.M1.jar"/>
 	<classpathentry kind="lib" path="resources/lib/org.apache.felix.main-4.0.2.jar"/>
-	<classpathentry kind="lib" path="resources/lib/00.log/com.springsource.slf4j.api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="resources/lib/01.apachecommons/commons-io-2.3.jar"/>
-	<classpathentry kind="lib" path="resources/lib/01.apachecommons/commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="bundle_isslucene/lib/icu4j_3_4_4.jar"/>
-	<classpathentry kind="lib" path="bundle_isslucene/lib/lucene-core-3.5.0.jar"/>
+	<classpathentry kind="lib" path="resources/lib/04.springdm/spring-osgi-extender-2.0.0.M1.jar"/>
+	<classpathentry kind="lib" path="resources/lib/04.springdm/spring-osgi-io-2.0.0.M1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
