@@ -55,12 +55,7 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
             }
             startTransaction();
 
-            // first: create table info
-            {
-                tableInfoDao.createTableInfo(tableInfo);
-            }
-
-            // second: create table schema
+            // first: create table schema
             {
                 String[] sqlKey = new String[] { "sql.createTable" };
                 Map<String, Object> params = new HashMap<String, Object>();
@@ -68,7 +63,7 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
                 executeStoredProcedure(sqlKey, params);
             }
 
-            // third: add columns
+            // second: add columns
             {
                 String[] sqlKey = new String[] { "sql.addField" };
                 Map<String, Object> params = new HashMap<String, Object>();
@@ -80,6 +75,11 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
                             : Boolean.FALSE);
                     executeStoredProcedure(sqlKey, params);
                 }
+            }
+
+            // third: create table info
+            {
+                tableInfoDao.createTableInfo(tableInfo);
             }
         } catch (Exception e) {
             try {
