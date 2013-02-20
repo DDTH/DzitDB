@@ -25,6 +25,12 @@
 		<fileset dir="${dir.resources}/lib">
 			<include name="*.jar" />
 		</fileset>
+		<fileset dir="${dir.resources}/lib/00.log">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${dir.resources}/lib/01.apachecommons">
+			<include name="*.jar" />
+		</fileset>
 		<fileset dir="${dir.resources}/lib/04.springdm">
 			<include name="*.jar" />
 		</fileset>
@@ -51,7 +57,9 @@
 	</target>
 
 	<target name="compile" depends="prepare">
-		<javac includeantruntime="false" srcdir="${dir.src}" destdir="${dir.classes}" encoding="utf-8" optimize="on" debug="on" fork="true" compiler="modern" source="1.6" target="1.6">
+		<javac includeantruntime="false" srcdir="${dir.src}" destdir="${dir.classes}"
+			encoding="utf-8" optimize="on" debug="on" fork="true" compiler="modern"
+			source="1.6" target="1.6">
 			<classpath>
 				<path refid="path.lib" />
 			</classpath>
@@ -81,9 +89,12 @@
 			<fileset dir="${dir.lib}">
 			</fileset>
 		</copy>
-		<copy tofile="${dir.META-INF}/MANIFEST.MF" file="MANIFEST.MF" overwrite="true" />
-		<replaceregexp file="${dir.META-INF}/MANIFEST.MF" match="Bundle-Version(.*)" replace="Bundle-Version: ${product.version.micro}" byline="true" />
-		<jar jarfile="${dir.build}/${product.name}-${product.version}.jar" basedir="${dir.classes}" duplicate="add" manifest="${dir.META-INF}/MANIFEST.MF">
+		<copy tofile="${dir.META-INF}/MANIFEST.MF" file="MANIFEST.MF"
+			overwrite="true" />
+		<replaceregexp file="${dir.META-INF}/MANIFEST.MF" match="Bundle-Version(.*)"
+			replace="Bundle-Version: ${product.version.micro}" byline="true" />
+		<jar jarfile="${dir.build}/${product.name}-${product.version}.jar"
+			basedir="${dir.classes}" duplicate="add" manifest="${dir.META-INF}/MANIFEST.MF">
 			<metainf dir="${dir.META-INF}">
 			</metainf>
 		</jar>

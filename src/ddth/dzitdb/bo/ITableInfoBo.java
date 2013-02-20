@@ -10,7 +10,21 @@ public interface ITableInfoBo {
 
     public String getTableInfoEncodedString();
 
+    public String[] getColumnNames();
+
     public boolean hasColumn(IDzitDbDao.EColumnType columnType);
 
     public boolean hasIndex(IDzitDbDao.EColumnType columnType);
+
+    public String getSqlDelete();
+
+    public String getSqlInsert();
+
+    public String getSqlSelect();
+
+    public String getSqlSelectKeys();
+
+    public String getSqlSelectSubkeys();
+
+    public String getSqlUpdate();
 }

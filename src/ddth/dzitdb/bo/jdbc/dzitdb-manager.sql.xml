@@ -17,15 +17,15 @@
     ]]></entry>
 
 	<entry key="sql.createTable"><![CDATA[
-        {"sql":"{CALL dzitdb_create_table(@{tableName})}"}
+        {"sql":"{CALL dzitdb_create_table(@{schemaName}, @{tableName})}"}
     ]]></entry>
     <entry key="sql.dropTable"><![CDATA[
-        {"sql":"{CALL dzitdb_drop_table(@{tableName})}"}
+        {"sql":"{CALL dzitdb_drop_table(@{schemaName}, @{tableName})}"}
     ]]></entry>
 	<entry key="sql.addField"><![CDATA[
-        {"sql":"{CALL dzitdb_add_field(@{tableName}, @{columnType}, @{hasIndex})}"}
+        {"sql":"{CALL dzitdb_add_field(@{schemaName}, @{tableName}, @{columnType}, @{hasIndex})}"}
     ]]></entry>
 	<entry key="sql.removeField"><![CDATA[
-        {"sql":"{CALL dzitdb_remove_field(@{tableName}, @{columnType})}"}
+        {"sql":"{CALL dzitdb_remove_field(@{schemaName}, @{tableName}, @{columnType})}"}
     ]]></entry>
 </properties>

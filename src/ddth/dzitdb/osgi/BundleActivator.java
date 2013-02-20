@@ -1,5 +1,6 @@
 package ddth.dzitdb.osgi;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.osgi.framework.BundleContext;
 import ddth.dasp.framework.dbc.DbcpJdbcFactory;
 import ddth.dasp.framework.osgi.BaseBundleActivator;
 import ddth.dzitdb.bo.IDzitDbDao;
+import ddth.dzitdb.bo.ITableInfoBo;
 import ddth.dzitdb.bo.jdbc.JdbcDzitDbDao;
 import ddth.dzitdb.bo.jdbc.JdbcTableInfoDao;
 
@@ -52,11 +54,23 @@ public class BundleActivator extends BaseBundleActivator {
         dzitDao.setDbPassword("vdn");
         dzitDao.init();
 
+        String schemaName = "vdn";
+        String tableName = "dtbl_demo";
+        dzitDao.deleteTable(schemaName, tableName);
+
         Map<IDzitDbDao.EColumnType, Boolean> columnInfo = new HashMap<IDzitDbDao.EColumnType, Boolean>();
         columnInfo.put(IDzitDbDao.EColumnType.INT, Boolean.TRUE);
         columnInfo.put(IDzitDbDao.EColumnType.DATETIME, Boolean.TRUE);
-        dzitDao.createTable("vdn", "demo", columnInfo);
+        dzitDao.createTable(schemaName, tableName, columnInfo);
 
-        tableInfoDao.getTableInfo("vdn", "dtbl_demo");
+        ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
+
+        String id = "nbthanh";
+        String key = "first_name";
+        String subkey = "";
+        Map<IDzitDbDao.EColumnType, Object> recordData = new HashMap<IDzitDbDao.EColumnType, Object>();
+        recordData.put(IDzitDbDao.EColumnType.INT, 12345);
+        recordData.put(IDzitDbDao.EColumnType.DATETIME, new Date());
+        dzitDao.createRecord(schemaName, tableName, id, key, subkey, recordData);
     }
 }
