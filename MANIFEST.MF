@@ -1,14 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DASP DzitDB
-Bundle-SymbolicName: ddth.dasp.dzitdb
+Bundle-SymbolicName: ddth.dzitdb
 Bundle-Version: 0.1.0
 Bundle-Activator: ddth.dzitdb.osgi.BundleActivator
 Require-Bundle: ddth.dasp.framework,
  org.apache.commons.lang3
-Export-Package: ddth.dasp.dzitdb,
- ddth.dasp.dzitdb.api,
- ddth.dasp.dzitdb.bo
+Export-Package: ddth.dzitdb,
+ ddth.dzitdb.api,
+ ddth.dzitdb.bo,
+ ddth.dzitdb.bo.jdbc
 Bundle-ClassPath: .
 Import-Package: ddth.dasp.common,
  ddth.dasp.common.id,
