@@ -13,7 +13,7 @@ import ddth.dzitdb.bo.ITableInfoBo;
 import ddth.dzitdb.bo.jdbc.JdbcDzitDbDao;
 import ddth.dzitdb.bo.jdbc.JdbcTableInfoDao;
 
-public class BundleActivator extends BaseBundleActivator {
+public class TestBundleActivator extends BaseBundleActivator {
 
     private DbcpJdbcFactory jdbcFactory;
 
@@ -64,6 +64,7 @@ public class BundleActivator extends BaseBundleActivator {
         dzitDao.createTable(schemaName, tableName, columnInfo);
 
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
+        System.out.println(tableInfo);
 
         String id = "nbthanh";
         String key = "first_name";

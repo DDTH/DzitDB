@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DASP DzitDB
 Bundle-SymbolicName: ddth.dzitdb
 Bundle-Version: 0.1.0
-Bundle-Activator: ddth.dzitdb.osgi.BundleActivator
 Require-Bundle: ddth.dasp.framework,
  org.apache.commons.lang3
 Export-Package: ddth.dzitdb,
