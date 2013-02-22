@@ -34,6 +34,7 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     protected final static String FIELD_HAS_INDEX = "hasIndex";
 
     private ITableInfoDao tableInfoDao;
+    private String tablePrefix;
 
     public ITableInfoDao getTableInfoDao() {
         return tableInfoDao;
@@ -43,15 +44,22 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
         this.tableInfoDao = tableInfoDao;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean tableExists(String schemaName, String tableName) {
-        return tableInfoDao.getTableInfo(schemaName, tableName) != null;
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
+
+    public void setTablePrefix(String tablePrefix) {
+        this.tablePrefix = tablePrefix;
     }
 
     /*--------------------------------------------------------------------------------*/
+
+    protected String normalizeTableName(String tableName) {
+        if (!StringUtils.isBlank(tablePrefix) && !tableName.startsWith(tablePrefix)) {
+            tableName = tablePrefix + tableName;
+        }
+        return tableName;
+    }
 
     protected String calcCacheKey(String schemaName, String tableName, String id) {
         String cacheKey = schemaName + "." + tableName + "." + id;
@@ -71,11 +79,13 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
 
     /*--------------------------------------------------------------------------------*/
 
-    protected String normalizeTableName(String tableName) {
-        if (!tableName.startsWith(IDzitDbDao.TABLE_PREFIX)) {
-            tableName = IDzitDbDao.TABLE_PREFIX + tableName;
-        }
-        return tableName;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean tableExists(String schemaName, String tableName) {
+        tableName = normalizeTableName(tableName);
+        return tableInfoDao.getTableInfo(schemaName, tableName) != null;
     }
 
     protected ITableInfoBo loadTableInfo(String schemaName, String tableName) {
@@ -248,6 +258,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     @Override
     public String createRecord(String schemaName, String tableName, String id, String key,
             String subkey, Map<IDzitDbDao.EColumnType, Object> recordData) {
+        tableName = normalizeTableName(tableName);
+
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
         if (tableInfo == null) {
             return null;
@@ -297,6 +309,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
      */
     @Override
     public void deleteRecords(String schemaName, String tableName, String id, String key) {
+        tableName = normalizeTableName(tableName);
+
         Map<String, Object>[] records = getRecords(schemaName, tableName, id, key);
         if (records != null && records.length > 0) {
             for (Map<String, Object> record : records) {
@@ -314,6 +328,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
      */
     @Override
     public void deleteRecords(String schemaName, String tableName, String id) {
+        tableName = normalizeTableName(tableName);
+
         Map<String, Map<String, Object>[]> entries = getRecords(schemaName, tableName, id);
         if (entries != null && entries.size() > 0) {
             for (Entry<String, Map<String, Object>[]> entry : entries.entrySet()) {
@@ -340,6 +356,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     @Override
     public void deleteRecord(String schemaName, String tableName, String id, String key,
             String subkey) {
+        tableName = normalizeTableName(tableName);
+
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
         if (tableInfo == null) {
             return;
@@ -391,6 +409,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     @Override
     public Map<String, Object> getRecord(String schemaName, String tableName, String id,
             String key, String subkey) {
+        tableName = normalizeTableName(tableName);
+
         // check if table exists
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
         if (tableInfo == null) {
@@ -435,6 +455,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     @Override
     public Map<String, Object>[] getRecords(String schemaName, String tableName, String id,
             String key) {
+        tableName = normalizeTableName(tableName);
+
         // check if table exists
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
         if (tableInfo == null) {
@@ -493,6 +515,8 @@ public class JdbcDzitDbDao extends BaseJdbcBoManager implements IDzitDbDao {
     @Override
     public Map<String, Map<String, Object>[]> getRecords(String schemaName, String tableName,
             String id) {
+        tableName = normalizeTableName(tableName);
+
         // check if table exists
         ITableInfoBo tableInfo = tableInfoDao.getTableInfo(schemaName, tableName);
         if (tableInfo == null) {
